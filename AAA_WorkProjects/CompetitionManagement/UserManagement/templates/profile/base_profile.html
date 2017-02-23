@@ -14,10 +14,25 @@
 
 {% comment %}Main content section{% endcomment %}
 {% block content %}
-    {% block sidebar %}
-    {% endblock %}
-
-    {% block main %}
-    {% endblock main %}
-
+    <div class="row profile-head">
+        <div class="jumbotron">
+            <div class="container">
+                {% block profile-head %}
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        
+        <div class="row main">
+            <section class="col-md-3 sidebar-left">
+                {% block sidebar-left %}
+                {% endblock %}
+            </section>
+            <section class="col-md-9 main-content">
+                {% block main-content %}
+                {% endblock %}
+            </section>
+        </div>
+    </div>
 {% endblock content %}

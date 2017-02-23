@@ -1,25 +1,37 @@
-{% extends 'base.html' %}
+{% extends 'profile/base_profile.html' %}
 
-{% block content %}
-<h2>{{ attendent.user.first_name}} {{ attendent.user.last_name}}s Profile</h2>
-<div>
-    <img src="{{ attendent.profileImg.url }}" alt="Profile picture of {{ attendent.user.get_full_name }}">
-    <p>{{ attendent.user.last_name }} </br> {{ attendent.user.first_name }}</p>
-</div>
-<div>
-    <p>Email: {{ attendent.user.email }}<br>
-    Tel: {{ attendent.phoneNumber }} <br>
-    <a href="{{ profile.website }}">Personal Website</a></p>
-</div>
-<div>
-    <h3>Slogan</h3>
-    <blockquote>{{ attendent.slogan }}</blockquote>
-    <h3>Biography</h3>
-    <p>{{ attendent.bio }}</p>
-</div>
+{% block profile-head %}
+<section>
+    <header>
+        <h2>{{ attendent.user.first_name}} {{ attendent.user.last_name}}s Profile</h2>
+        <div>
+            <img src="{{ attendent.profileImg.url }}" alt="Profile picture of {{ attendent.user.get_full_name }}">
+            <p>{{ attendent.user.last_name }} </br> {{ attendent.user.first_name }}</p>
+        </div>
+        <div>
+            <p>Email: {{ attendent.user.email }}<br>
+            Tel: {{ attendent.phoneNumber }} <br>
+            <a href="{{ profile.website }}">Personal Website</a></p>
+        </div>
+    </header>
+    <content>
+        <div>
+            <h3>Slogan</h3>
+            <blockquote>{{ attendent.expertprofile.slogan }}</blockquote>
+            <h3>Biography</h3>
+            <p>{{ attendent.expertprofile.bio }}</p>
+        </div>
+        <footer>
+            Section displaying information based on viewer
+        </footer>
+    </content>
+</section>
+{% endblock %}
+
+{% block main-content %}
 <section>
     <h3>Certifications</h2>
-    {% for certificate in attendent.certifications.all %}
+    {% for certificate in attendent.expertprofile.certifications.all %}
     <article>
         <header>
             <h4>{{ certificate.title }}</h4>
@@ -35,7 +47,7 @@
     <header>
         <h3>Mediation Experience</h3>
     </header>
-    {% for experience in profile.mediation_experience.all %}
+    {% for experience in attendent.expertprofile.mediation_experience.all %}
         <article>
             <header>
                 <h4>{{ experience.get_profession_display }}</h4>
@@ -86,6 +98,6 @@
     {% endfor %}
 </section>
 
-{% endblock content %}
+{% endblock %}
 
 

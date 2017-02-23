@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css-includes %}
+<link rel="stylesheet" href="{% static 'main_portal.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="competition teaser_section row">
+    <section class="container">
+        <header>
+            <h2>The Competition</h2>
+        </header>
+    </section>
+</section>
+<section class="venue teaser_section row">
+    <section class="container">
+        <header>
+            <h2>The Venue </h2>
+            {% for venue in venues %}
+            <article class="venue_teaser">
+                <header>
+                    <img src="{% if venue.locationProfileImg %}{{ venue.locationProfileImg.url }}{% else %} https://placehold.it/240x160 {% endif %}" alt="" class="img-responsive">
+                </header>
+            </article>
+            {% endfor %}
+        </header>
+    </section>
+</section>
+<section class="teams teaser_section row">
+    <section class="container">
+        <header>
+            <h2>The Teams</h2>
+            {% for team in teams_invited %}
+            <article class="row team-teaser">
+                <header>
+                    <div class="col-sm-3 team-label">
+                        <h3>{{ team.name }}</h3>
+                        <p>{{ team.slogan }}</p>
+                        <ul class="team-members">
+                            {% for member in team.members %}
+                            <li>{{ member.user.get_full_name }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="col-sm-9 team-img">
+                        <img  class="img-responsive" src="{% if team.profileImg %}{{ team.profileImg.url}}{% else %}https://placehold.it/640x220{% endif %}" alt="">
+                    </div>
+
+                    <h4></h4>
+                </header>
+            </article>
+            {% endfor %}
+        </header>
+    </section>
+</section>
+<section class="row teaser_section experts">
+    <section class="container">
+        <div class="row">
+            <header>
+                <h2>The Experts</h2>
+            </header>
+            {% for expert in experts_invited %}
+                <article class="col-xs-6  col-sm-4 col-md-3">
+                    <header>
+                        <img src="{% if expert.expertprofile.profileImg %}{{ expert.expertprofile.profileImg.url }} {% else %}https://placehold.it/190x180 {% endif %}" alt="">
+                        <h4>{{ expert.user.get_full_name }}</h4>
+                    </header>
+                    <content>
+                        {{ expert.expertprofile.bio }}
+                    </content>
+                </article>
+            {% endfor %}
+        </div>
+        
+    </section>
+</section>
+
+{% endblock content %}

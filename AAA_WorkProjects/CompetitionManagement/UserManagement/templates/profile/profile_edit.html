@@ -6,6 +6,7 @@
     <table>
         <tbody>
             {% csrf_token %}
+            {{ user_form.as_table }}
             {{ expert_form.as_table }}
           </tbody>
     </table>
@@ -17,11 +18,19 @@
         </tbody>
     </table>
     <h2>Mediation Experience</h2>
+    {{ medExp_list }}
     <table>
         <tbody>
-            {% for form in medExp_list %}
-                {{ form.as_table }}
-            {% endfor %}
+            {% if medExp_list %}
+                medExp_list generated
+                {% for form in medExp_list %}
+                    {{ form.as_table }}
+                {% endfor %}
+            {% else %}
+                no medExp_list
+                {{ medExp_form.as_table}}
+            {% endif %}
+           
         </tbody>
     </table>
 

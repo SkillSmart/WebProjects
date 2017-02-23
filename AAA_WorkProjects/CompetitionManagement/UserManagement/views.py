@@ -30,51 +30,6 @@ NEGEXP_FORM = {
     'negotiator': NegotiationPracticeForm,
     'staff': None,
 }
-# Create your views here.
-
-def profile_display(request):
-    # Switch Dicctionary to display the right form    
-    return render(request, 'profile/profile.html', {
-        'attendent': request.user.attendent,
-    })
-
-
-def profile_edit(request):
-    if request.method=="POST":
-        expert_form = ExpertModelForm(request.POST)
-        user_form = UserModelForm(request.POST)
-        negExp_form = NegotiationExperienceForm(request.POST)
-        medExp_form = MediationExperienceForm(request.POST)
-        if expert_form.is_valid() and negExp_form.is_valid() and medExp_form.is_valid():
-            expert_form.save()
-            negExp_form.save()
-            medExp_form.save()
-            return HttpResponseRedirect('profile')
-    else:
-        expert_profile = ExpertProfile.objects.get(user_id=request.user.id)
-        expert_form = ExpertModelForm(instance=expert_profile)
-        user_form = UserModelForm(instance=expert_profile)
-        # Display existing and prepopulated Experience Forms
-        negExp_list = []
-        for negExp in expert_profile.negotiation_experience.all():
-            negExp_list.append(NegotiationExperienceForm(instance=negExp))
-        medExp_list = []
-        for medExp in expert_profile.mediation_experience.all():
-            medExp_list.append(MediationExperienceForm(instance=medExp))
-        
-        # Create empty forms to add to the view for additional Experiences
-        negExp_form = NegotiationExperienceForm()
-        medExp_form = MediationExperienceForm()
-
-    return render(request, 'profile/profile_edit.html', {
-        'user_form': user_form,
-        'members': TeamProfile.MEMBERS,
-        'expert_form': expert_form,
-        'negExp_list': negExp_list,
-        'medExp_list': medExp_list,
-    })
-
-
 # ----- Profile Creation ----------
 def profile_create(request):
     
@@ -100,8 +55,6 @@ def profile_create(request):
         negExp_form = NEGEXP_FORM[request.user.attendent.role]
         medExp_form = MEDEXP_FORM[request.user.attendent.role]
 
-
-
     return render(request, 'registration/profile_create.html', {
         'attendent': Attendent.objects.get(user = request.user),
         'profile_form': profile_form,
@@ -110,7 +63,7 @@ def profile_create(request):
         'medExp_form': medExp_form,
     })
 
-
+# --- Profile Management ---------
 def profile_delete(request):
     if request.method=="POST":
         if request.delete:
@@ -118,8 +71,63 @@ def profile_delete(request):
 
     return render(request, 'profile/profile_delete.html', {})
 
+def profile_display(request):
+    # Switch Dicctionary to display the right form    
+    return render(request, 'profile/profile.html', {
+        'attendent': request.user.attendent,
+    })
 
 
+def profile_edit(request):
+    if request.method=="POST":
+        expert_form = ExpertModelForm(request.POST)
+        user_form = UserModelForm(request.POST)
+        negExp_form = NegotiationExperienceForm(request.POST)
+        medExp_form = MediationExperienceForm(request.POST)
+        if expert_form.is_valid() and negExp_form.is_valid() and medExp_form.is_valid():
+            expert_form.save(commit=False)
+            expert_form.attendent = request.user.attendent
+
+            # Processing negExperience Forms
+            negExperience = negExp_form.save(commit=False)
+            negExperience.attendent = request.user.attendent
+            negExperience.save()
+
+            # Processing medExperience Forms
+            medExperience = medExp_form.save(commit=False)
+            medExperience.attendent = request.user.attendent
+            medExperience.save()
+
+            return HttpResponseRedirect('/')
+    else:
+        expert_profile = ExpertProfile.objects.get(attendent=request.user.attendent)
+        expert_form = ExpertModelForm(instance=expert_profile)
+        user_form = UserModelForm(instance=request.user)
+        # Display existing and prepopulated Experience Forms
+        negExp_list = []
+        for negExp in expert_profile.negotiation_experience.all():
+            negExp_list.append(NegotiationExperienceForm(instance=negExp))
+        medExp_list = []
+        for medExp in expert_profile.mediation_experience.all():
+            medExp_list.append(MediationExperienceForm(instance=medExp))
+        
+        # Create empty forms to add to the view for additional Experiences
+        negExp_form = NegotiationExperienceForm()
+        medExp_form = MediationExperienceForm()
+
+    return render(request, 'profile/profile_edit.html', {
+        'user_form': user_form,
+        'members': TeamProfile.MEMBERS,
+        'expert_form': expert_form,
+        'negExp_list': negExp_list,
+        'medExp_list': medExp_list,
+        'negExp_form': negExp_form,
+        'medExp_form': medExp_form,
+    })
+
+# ------ Profile Interaction -----------
+
+# TESTCASE
 def profile_test(request):
     if request.method == "POST":
         form = ExpertModelForm(request.POST)

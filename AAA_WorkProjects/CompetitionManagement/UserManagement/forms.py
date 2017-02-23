@@ -1,6 +1,8 @@
 from django.forms import ModelForm, Form
 from django.contrib.auth.models import User
+
 # Profile Models
+from Authentication.forms import UserModelForm
 from .models import ExpertProfile, TeamProfile, StudentProfile
 # Expert Attribute Models
 from .models import MediationExperience, NegotiationExperience
@@ -9,11 +11,6 @@ from .models import MediationPractice, NegotiationPractice
 
 
 # Setting up the forms
-class UserModelForm(ModelForm):
-    class Meta:
-        model = User
-        exclude = ['attendent']
-
 class ExpertModelForm(ModelForm):
     class Meta:
         model = ExpertProfile

@@ -24,7 +24,7 @@ from Authentication import views as authentication_views
 
 # Application INCLUDES
 urlpatterns = [
-    url(r'^$', authentication_views.index, name='home'),
+    url(r'^', include('portal.urls')),
     url(r'^profile/', include('UserManagement.urls')),
     url(r'^session/', include('SessionManagement.urls')),
     url(r'^application/', include('ApplicationManagement.urls')),
@@ -45,8 +45,7 @@ urlpatterns += [
         'template_name': 'authentication/resetPasswordDone.html'}, name="password_reset_done"),
     url(r'^admin/', admin.site.urls),
     url(r'^signup/$', authentication_views.signup, name='signup'),
-]
-
+] 
 # Additon to serve Media when DEBUG=TRUE
 
 if settings.DEBUG:
