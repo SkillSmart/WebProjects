@@ -1,5 +1,5 @@
 {%  extends "records/base.html" %}
-{% load record_extras %}
+{#{% load record_extras %}#}
 {% block title %}Records{% endblock title %}
 
 {% block page-content %}
@@ -23,7 +23,7 @@
                 </div>
                 <div class="record-list">
                     <span class="record-span">Password</span>
-                    {% hide_password record.plaintext %}
+{#                    {% hide_password record.plaintext %}#}
                 </div>
             </div>
             <div class="record-right">
@@ -49,3 +49,8 @@
 
     {%  endfor %}
 {% endblock page-content %}
+
+{% block footer %}
+    <p><a href="#top">Go back to top</a> </p>
+    {% include "records/footer.html" %}
+{% endblock footer %}

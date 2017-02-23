@@ -1,10 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends "records/base.html" %}
+
+{% block title %}Delete record{% endblock title %}
+
+{% block page-content %}
+    <h1>Confir Record Delition</h1>
+    <form action="." method="post">{% csrf_token %}
+        <p>Are you sure you want to delete "{{ object }}"?</p>
+    </form>
+    <input type="submit" value="Confirm" />&nbsp;
+    <a href="{% url "records:list" %}#record-{{ object.pk }}">
+    cancel
+    </a>
+{% endblock page-content %}
