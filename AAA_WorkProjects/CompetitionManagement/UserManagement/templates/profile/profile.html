@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>{{ attendent.user.first_name}} {{ attendent.user.last_name}}s Profile</h2>
+<div>
+    <img src="{{ attendent.profileImg.url }}" alt="Profile picture of {{ attendent.user.get_full_name }}">
+    <p>{{ attendent.user.last_name }} </br> {{ attendent.user.first_name }}</p>
+</div>
+<div>
+    <p>Email: {{ attendent.user.email }}<br>
+    Tel: {{ attendent.phoneNumber }} <br>
+    <a href="{{ profile.website }}">Personal Website</a></p>
+</div>
+<div>
+    <h3>Slogan</h3>
+    <blockquote>{{ attendent.slogan }}</blockquote>
+    <h3>Biography</h3>
+    <p>{{ attendent.bio }}</p>
+</div>
+<section>
+    <h3>Certifications</h2>
+    {% for certificate in attendent.certifications.all %}
+    <article>
+        <header>
+            <h4>{{ certificate.title }}</h4>
+            <ul>
+                <li>{{ certificate.institution }}</li>
+                <li>{{ certificate.issueDate }}</li>
+            </ul>
+        </header>
+    </article>
+    {% endfor %}
+</section>
+<section>
+    <header>
+        <h3>Mediation Experience</h3>
+    </header>
+    {% for experience in profile.mediation_experience.all %}
+        <article>
+            <header>
+                <h4>{{ experience.get_profession_display }}</h4>
+                <ul>
+                    <li>{{ experience.duration }} Years Experience</li>
+                    <li>{{ experience.cases }} client cases worked</li>
+                </ul>
+            </header>
+            <p>{{ experience.description }}</p>
+            <footer>
+                <div>
+                    <h4>Places worked</h4>
+                    <p>{{ experience.placesWorked }}</p>
+                </div>
+                <div>
+                    <h4>Clients</h4>
+                    <p>{{ experience.priorClients }}</p>
+                </div>
+            </footer>
+        </article>
+    {% endfor %}
+</section>
+<section>
+    <header>
+        <h3>Negotiation Experience</h3>
+    </header>
+    {% for experience in profile.negotiation_experience.all %}
+        <article>
+            <header>
+                <h4>{{ experience.get_profession_display }}</h4>
+                <ul>
+                    <li>{{ experience.duration }} Years Experience</li>
+                    <li>{{ experience.cases }} client cases worked</li>
+                </ul>
+            </header>
+            <p>{{ experience.description }}</p>
+            <footer>
+                <div>
+                    <h4>Places worked</h4>
+                    <p>{{ experience.placesWorked }}</p>
+                </div>
+                <div>
+                    <h4>Clients</h4>
+                    <p>{{ experience.priorClients }}</p>
+                </div>
+            </footer>
+        </article>
+    {% endfor %}
+</section>
+
+{% endblock content %}
+
+

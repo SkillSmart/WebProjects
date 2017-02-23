@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Profile</h2>
+<form method="POST" action="">
+    <table>
+        <tbody>
+            {% csrf_token %}
+            {{ expert_form.as_table }}
+          </tbody>
+    </table>
+    <table>
+        <tbody>
+        {% for form in negExp_list %}
+            {{form.as_table}}
+        {% endfor %}
+        </tbody>
+    </table>
+    <h2>Mediation Experience</h2>
+    <table>
+        <tbody>
+            {% for form in medExp_list %}
+                {{ form.as_table }}
+            {% endfor %}
+        </tbody>
+    </table>
+
+
+    <button type="submit">Save changes</button>
+    </form>
+{% endblock content %}

@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+
+{% if form.errors %}
+<p>Your information did not match. Please try again.</p>
+{% endif %}
+
+{% if user.is_authenticated %}
+
+{% else %}
+<form action="{% url 'login' %}" method="POST">
+    {% csrf_token %}
+    <table>
+    <tbody>
+        <tr>
+            <td>{{ form.username.label_tag }}</td>
+            <td>{{ form.username }}</td>
+        </tr>
+        <tr>
+            <td>{{ form.password.label_tag }}</td>
+            <td>{{ form.password }}</td>
+        </tr>
+    </tbody>
+    </table>
+
+    <input type="submit" name="" value="login">
+    <input type="hidden" name="next" value="{{ next }}">
+</form>
+
+{# This assumes the password_reset is setup#}
+<p><a href="{% url 'password_reset' %}">Lost password?</a></p>
+{% endif %}
+{% endblock %}
+
