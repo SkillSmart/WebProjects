@@ -8,5 +8,7 @@ urlpatterns = [
     url(r'^competition/$', views.competition, name='competition'),
     url(r'^venue/$', views.venue, name='venue'),
     url(r'^teams/$', views.teams, name='teams'),
-    url(r'^experts/$', views.experts, name='experts'),
+    url(r'^teams/(?P<teamname>.+)/$', views.team_detail, name="team_profile"),
+    url(r'^experts/$', views.experts_index, name='experts'),
+    url(r'^expert/(?P<username>.+)/$', views.experts_detail, name='expert_profile'),
 ]

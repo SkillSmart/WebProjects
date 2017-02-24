@@ -10,6 +10,9 @@
         <title></title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        {% comment %}CDN links for production{% endcomment %}
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        {% comment %}LOCAL FILEIMPORT{% endcomment %}
         <link rel="stylesheet" href="{% static 'css/main.css' %}">
         <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
         {% block css-includes %}{% endblock %}  
@@ -18,7 +21,7 @@
         <nav class="navbar navbar-fixed-top">
           <div class="container-fluid">
             <div class="navbar-header">
-              <a class="navbar-brand" href="#">CDRC</a>
+              <a class="navbar-brand" href="{% url 'portal:index' %}">CDRC</a>
             </div>
             <ul class="nav navbar-nav">
               <li class="active"><a href="{% url 'portal:competition' %}">Competition</a></li>
@@ -27,11 +30,27 @@
               <li><a href="{% url 'portal:experts' %}">Experts</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">Apply</a></li>
-                <li><a href="#">Log in</a></li>
+                {% if not user.is_authenticated %}
+                <li><a href="#">Log In</a></li>
+                <li><a role="button" href="#" class="btn navbar-btn">Apply</a></li>
+                {% else %}
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" type="button" data-toggle="dropdown" id="menu1" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user"></i>Profile <b class="caret"></b></a>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+                        <li class="dropdown-header">Profile Settings</li>
+                        <li><a href="#">Profile</a></li>
+                        <li><a href="#">Messages</a></li>
+                        <li><a href="#">Settings</a></li>
+                        <li class="divider"></li>
+                        <li class="dropdown-header">Session Control</li>
+                        <li><a href="">Log Out</a></li>
+                    </ul>
+                </li>
+                {% endif %}
             </ul>
           </div>
         </nav>
+
     </head>
     <body>
         
@@ -66,9 +85,12 @@
     
 
     {% comment %}JS Includes{% endcomment %}
-    <script src="{% static 'js/jquery.min.js'}"></script>
+    <script src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js'}"></script>
 
+    {% comment %}CDN Imports for Production{% endcomment %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     {% block js-includes %}{% endblock %}
     </body>
 </html>

@@ -1,0 +1,71 @@
+{% extends 'base_profile.html' %}
+
+{% block profile-header %}
+<section class="jumbotron">
+    <div class="container">
+        <header>
+            <h2>CDRC Expert Selection</h2>
+        </header>
+        <content class="row">
+            <div class="searchBox col-sm-4">
+                <h4>by Mediation Experience</h4>
+                <form action="" method="GET">
+                    {% for role in medExp_list %}
+                        <div class="">
+                            <label for="id_{{role}}">{{ role }}</label>
+                            <input type="checkbox" name="id_{{role}}" value="{{ role.value }}" class="">
+                        </div>
+                    {% endfor %}
+                </form>
+            </div>
+            <div class="searchBox col-sm-4">
+                <h4>by Negotiation Experience</h4>
+                <form action="" method="GET">
+                    {% for role in negExp_list %}
+                        <div class="">
+                            <label for="id_{{role}}">{{role}}</label>
+                            <input type="checkbox" name="id_{{role}}" value="{{role}}" class="">
+                        </div>
+                    {% endfor %}
+                </form>
+            </div>
+            <div class="searchBox col-sm-4">
+                <h4>Find an Expert</h4>
+                <form method="POST" action="">
+                    <table>
+                        {{ search_form.as_table }}
+                    </table>
+                </form>
+            </div>
+        </content>
+    </div>
+</section>
+{% endblock %}
+
+{% block profile-content %}
+    {% for expert in expert_list %}
+    <a href="{% url 'portal:expert_profile' expert.user.username %}">
+        <article class="list_item row">
+            <header class="col-sm-3">
+                <img src="{% if exper.expertprofile.profileImg %}{{ expert.expertprofile.profileImg.url }}{% else %}https://placehold.it/180x190{% endif %}" alt="">
+                <h4>{{ expert.user.first_name }}<br>{{ expert.user.last_name }}</h4>
+            </header>
+            <content class="col-sm-9">
+                <blockquote cite="">
+                    {{ expert.expertprofile.slogan }}
+                </blockquote>
+                <h3>Biography</h3>
+                <p>{{ expert.expertprofile.bio|truncatewords:60 }}</p>
+            </content>
+            <footer>
+                <ul class="list-inline">
+                    <li><a href="#">Twitter</a></li>
+                    <li><a href="#">Facebook</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Official</a></li>
+                </ul>
+            </footer>
+        </article>
+    </a>
+    {% endfor %}
+{% endblock %}

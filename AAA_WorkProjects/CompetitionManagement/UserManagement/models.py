@@ -121,6 +121,8 @@ class ExpertProfile(Profile):
     attendent = models.OneToOneField(Attendent)
     slogan = models.TextField(max_length=500, blank=True)
     certifications = models.ManyToManyField(Certification, blank=True)
+    affiliation = models.CharField(max_length=100)
+    position = models.CharField(max_length=100)
     # -- Professional Experience
     mediation_experience = models.ManyToManyField(MediationExperience, 
     related_name='mediation_experience', blank=True)
@@ -163,6 +165,7 @@ class TeamProfile(Profile):
 
     university = models.CharField(max_length=100)
     name = models.CharField(max_length=100)
+    slug = models.SlugField(default="")
 
     # Assignment of the Team Members
     # member_a = models.OneToOneField(Attendent, related_name="member_a")

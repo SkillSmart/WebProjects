@@ -66,8 +66,9 @@
                         <img src="{% if expert.expertprofile.profileImg %}{{ expert.expertprofile.profileImg.url }} {% else %}https://placehold.it/190x180 {% endif %}" alt="">
                         <h4>{{ expert.user.get_full_name }}</h4>
                     </header>
-                    <content>
-                        {{ expert.expertprofile.bio }}
+                    <content class="expert_overlay">
+                        {{ expert.expertprofile.position }}</br>
+                        {{ expert.expertprofile.affiliation }}
                     </content>
                 </article>
             {% endfor %}

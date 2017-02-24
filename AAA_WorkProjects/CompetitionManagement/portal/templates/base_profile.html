@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block sub-navigation %}
+{% comment %}
+Display a forum navigation with linkedin style dialog features
+for all logged in users heres.
+{% endcomment %}
+{% endblock %}
+
+
+{% block content %}
+   {% block profile-header %}
+   {% endblock %}
+
+<section class="profile-content row">
+    <div class="container">
+        {% block profile-content %}
+        {% endblock %}
+    </div>
+</section>
+{% endblock %}

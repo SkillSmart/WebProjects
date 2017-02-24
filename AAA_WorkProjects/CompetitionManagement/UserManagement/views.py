@@ -85,9 +85,7 @@ def profile_edit(request):
         negExp_form = NegotiationExperienceForm(request.POST)
         medExp_form = MediationExperienceForm(request.POST)
         if expert_form.is_valid() and negExp_form.is_valid() and medExp_form.is_valid():
-            expert_form.save(commit=False)
-            expert_form.attendent = request.user.attendent
-
+            
             # Processing negExperience Forms
             negExperience = negExp_form.save(commit=False)
             negExperience.attendent = request.user.attendent
@@ -97,6 +95,10 @@ def profile_edit(request):
             medExperience = medExp_form.save(commit=False)
             medExperience.attendent = request.user.attendent
             medExperience.save()
+
+            expert_form.save(commit=False)
+            expert_form.mediation_experiences = medExperience
+            expert_form.attendent = request.user.attendent
 
             return HttpResponseRedirect('/')
     else:

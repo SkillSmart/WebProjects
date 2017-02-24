@@ -2,8 +2,23 @@ body {
     padding-top: 70px;
 }
 
-nav {
-    background: darkblue;
-    color: white;
+.navbar-fixed-top {
+    background: white;
+    height: 70px;
+}
+.navbar-brand {
+    font-size: 40px;
+}
+.navbar-fixed-top a {
+    color: #888888;
+    padding: 15px 40px;
+    margin-right: 10px;
+    font-weight: 200;
+}
+
+.navbar-fixed-top li a:hover {
+    border-bottom: 4px solid darkblue;
+    color: darkblue !important;
+    background-color: inherit!important;
 }
 

@@ -1,0 +1,96 @@
+{% extends 'base_profile.html' %}
+
+
+{% block profile-header %}
+<section class="jumbotron row">
+    
+    <header class="container">
+        <div class="profile_details col-sm-4">
+            <img src="{% if user.attendent.expertprofile.profileImg %}{{ user.attendent.expertprofile.profileImg }} {% else %} https://placehold.it/180x180 {% endif %}" alt="">
+            <div class="interaction btn-group btn-group">
+                {% if user.attendent.role == 'expert' %}
+                    <button type="button" class="btn btn-success">Connect</button>
+                    <button type="button" class="btn btn-primary">Recommend</button>
+                {% else %}
+                    <button type="button" class="btn btn-success">Ask to Connect</button>
+                    {% comment %}Make this available when connected{% endcomment %}
+                    <button type="button" class="btn btn-primary">Schedule Meetup</button>
+                {% endif %}
+            </div>
+            <h2>{{ user.get_full_name }}</h2>
+            <p class="affiliation">{{ user.attendent.expertprofile.position }}</br>
+            {{ user.attendent.expertprofile.affiliation }}</p>
+            
+            
+            <nav class="social_links list-inline">
+                <li><a href="#">Twitter</a></li>
+                <li><a href="#">Facebook</a></li>
+                <li><a href="#">Blog</a></li>
+            </nav>
+            <ul class="contact_details list-unstyled">
+                <li><span class="glyphicon glyphicon-phone">+43 678 123 5678</span></li>
+                <li><span class="glyphicon glyphicon-envelope"></span>{{ user.email }}</li>
+                <li><span class="glyphicon"></span></li>
+            </ul>
+            
+            
+        </div>
+        <content class="col-sm-8">
+            <article>
+                <header>
+                </header>
+                <content>
+                    <blockquote cite="">
+                        {{ user.attendent.expertprofile.slogan }}
+                    </blockquote>
+                </content>
+            </article>
+            <article>
+                <header>
+                    <h3>Biography</h3>
+                </header>
+                <content>
+                    {{ user.attendent.expertprofile.bio }}
+                </content>
+            </article>
+        </content>
+    </header>
+</section>
+{% endblock %}
+
+{% block profile-content %}
+<section class="container">
+     <content>
+        {% for experience in user.attendent.expertprofile.mediation_experience.all %}
+           <article class="row">
+               <header class="col-sm-4">
+                   <h4>{{ experience.get_profession_display }}</h4>
+                    <ul class="list-unstyled">
+                        <li>for {{ experience.duration }} years</li>
+                        <li>with {{ experience.cases }} cases worked</li>
+                    </ul>
+               </header>
+               <content class="col-sm-8">
+                   <h4>Summary</h4>
+                   <p>{{ experience.description }}</p>
+                   <aside>
+                       <div class="col-sm-6">
+                           <h4>Clients I worked with</h4>
+                           <p>{{ experience.priorClients }}</p>
+                       </div>
+                        <div class="col-sm-6">
+                            <h4>Places I worked in</h4>
+                            <p>{{ experience.placesWorked }}</p>
+                        </div>
+                   </aside>
+               </content>
+           </article>
+        {% endfor %}
+    </content>
+    
+    <article class="row">
+        
+    </article>
+
+</section>
+{% endblock %}
