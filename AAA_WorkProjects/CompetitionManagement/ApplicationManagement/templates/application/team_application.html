@@ -1,0 +1,27 @@
+{% extends 'base_application.html' %}
+
+{% block form-content %}
+<h1>Team Registration</h1>
+<h2>Team Information</h2>
+<form action="" method="POST">
+    <table>
+        <tbody>
+           {{ teamForm.as_table }}
+        </tbody>
+    </table>
+</form>
+
+
+<h2>Register Team Members</h2>
+<p>Next, please register all Team Members as part of the Team Application</p>
+<table>
+    <tbody>
+       {% for form in userForm %}
+       <tr><td>Add Team Member</td></tr>
+       {{ form.as_table}}
+
+       {% endfor %}
+    </tbody>
+</table>
+
+{% endblock form-content %}

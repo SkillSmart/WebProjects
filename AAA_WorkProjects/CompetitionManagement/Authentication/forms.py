@@ -19,7 +19,7 @@ class UserModelForm(forms.ModelForm):
 class AttendentModelForm(forms.ModelForm):
     class Meta:
         model = Attendent
-        fields = ['role']
+        exclude = []
 
 # ---- Authentication Action Forms ---------
 class LoginForm(forms.Form):

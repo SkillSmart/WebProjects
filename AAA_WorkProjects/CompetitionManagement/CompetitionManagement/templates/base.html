@@ -1,4 +1,6 @@
 {% load static %}
+{% comment %}Loads the tags.py files{% endcomment %}
+{% load tags %}
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
@@ -18,32 +20,41 @@
         {% block css-includes %}{% endblock %}  
 
         {% comment %}Main Navigation{% endcomment %}
+        {% url 'portal:index' as index%}
+        {% url 'portal:competition' as competition %}
+        {% url 'portal:venue' as venue %}
+        {% url 'portal:teams' as teams %}
+        {% url 'portal:experts' as experts %}
+        {% url 'portal:students' as students %}
+
+        {% comment %}{% endcomment %}
         <nav class="navbar navbar-fixed-top">
           <div class="container-fluid">
             <div class="navbar-header">
-              <a class="navbar-brand" href="{% url 'portal:index' %}">CDRC</a>
+              <a class="navbar-brand" href="{{ index }}">CDRC</a>
             </div>
             <ul class="nav navbar-nav">
-              <li class="active"><a href="{% url 'portal:competition' %}">Competition</a></li>
-              <li><a href="{% url 'portal:venue'%}">Venue</a></li>
-              <li><a href="{% url 'portal:teams'%}">Teams</a></li>
-              <li><a href="{% url 'portal:experts' %}">Experts</a></li>
+              <li><a class="{% active request competition %}" href="{{ competition }}">Competition</a></li>
+              <li><a class="{% active request venue %}" href="{{ venue }}">Venue</a></li>
+              <li><a class="{% active request teams %}" href="{{ teams }}">Teams</a></li>
+              <li><a class="{% active request experts %}" href="{{ experts }}">Experts</a></li>
+              <li><a class="{% active request students %}" href="{{ students }}">Students</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 {% if not user.is_authenticated %}
-                <li><a href="#">Log In</a></li>
-                <li><a role="button" href="#" class="btn navbar-btn">Apply</a></li>
+                <li><a href="{% url 'login' %}">Log In</a></li>
+                <li><a role="button" href="{% url 'signup'%}">Apply</a></li>
                 {% else %}
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" type="button" data-toggle="dropdown" id="menu1" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user"></i>Profile <b class="caret"></b></a>
+                    <li><a href="{% url 'logout' %}">Log Out</a></li>
+                    <li><a href="#" class="dropdown-toggle" type="button" data-toggle="dropdown" id="menu1" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user"></i>Profile <b class="caret"></b></a></li>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
-                        <li class="dropdown-header">Profile Settings</li>
+                       <li class="dropdown-header">Profile Settings</li>
                         <li><a href="#">Profile</a></li>
                         <li><a href="#">Messages</a></li>
                         <li><a href="#">Settings</a></li>
                         <li class="divider"></li>
                         <li class="dropdown-header">Session Control</li>
-                        <li><a href="">Log Out</a></li>
                     </ul>
                 </li>
                 {% endif %}

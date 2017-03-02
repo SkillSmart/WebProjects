@@ -1,4 +1,59 @@
-from django.shortcuts import render
+from django.shortcuts import render, HttpResponseRedirect
+from django.forms import formset_factory, inlineformset_factory
+# FORM Imput -----------
+from .forms import UserRegistrationForm, TeamRegistrationForm
+from .forms import TeamMemberRegistration
+from .forms import TeamRegistrationForm
+from .forms import StudentProfileForm, CourseForm, InternshipForm
+# ------Application Process Forms ---------
+
+def student_registration(request):
+    """Display the Registration Form for the User Registration Process"""
+    # Set up Formsets to be used
+    competitionFormset = formset_factory(AwardForm, extra=3)
+    intExpFormset = formset_factory(InternshipForm)
+    courseworkFormset =  formset_factory(CourseForm, extra=3)
+    
+    if request.method =="POST":
+        userForm = UserRegistrationForm(request.POST)
+        profileForm = StudentProfileForm(request.POST)
+        if userForm.is_valid() and profileForm.is_valid():
+            userForm.save(commit=False)
+            profileForm.save(commit=False)
+
+            HttpResponseRedirect('portal:index')
+    userForm = UserRegistrationForm()
+    profileForm = StudentProfileForm()
+
+
+    return render(request, 'application/student_application.html', {
+        'userForm': userForm, 
+        'profileForm': profileForm,
+        'competitionFormset': competitionFormset,
+        'intExpFormset': intExpFormset,
+        'courseworkFormset': courseworkFormset,
+
+    })
+
+
+def team_registration(request):
+    """Display Registration Form for Team Registration"""
+    if request.method == "POST": 
+        form = TeamRegistrationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            HttpResponseRedirect('portal:index')
+    else:
+        userForm = TeamMemberRegistration()
+        teamForm = TeamRegistrationForm()
+        
+
+    return render(request, 'application/team_application.html', {
+        'teamForm': teamForm, 
+        'userForm': userForm,
+
+    })
+
 
 #-------Application Display--------
 def application_list(request):

@@ -47,24 +47,18 @@
     <a href="{% url 'portal:expert_profile' expert.user.username %}">
         <article class="list_item row">
             <header class="col-sm-3">
-                <img src="{% if exper.expertprofile.profileImg %}{{ expert.expertprofile.profileImg.url }}{% else %}https://placehold.it/180x190{% endif %}" alt="">
+                <img src="{% if expert.profile.expertprofile.profileImg %}{{ expert.profile.expertprofile.profileImg.url }}{% else %}https://placehold.it/180x190{% endif %}" alt="">
                 <h4>{{ expert.user.first_name }}<br>{{ expert.user.last_name }}</h4>
+                <h5>{{ expert.profile.expertprofile.affiliation }}</h5>
             </header>
             <content class="col-sm-9">
                 <blockquote cite="">
-                    {{ expert.expertprofile.slogan }}
+                    {{ expert.profile.expertprofile.slogan }}
                 </blockquote>
                 <h3>Biography</h3>
-                <p>{{ expert.expertprofile.bio|truncatewords:60 }}</p>
+                <p>{{ expert.profile.expertprofile.bio|truncatewords:60 }}</p>
             </content>
-            <footer>
-                <ul class="list-inline">
-                    <li><a href="#">Twitter</a></li>
-                    <li><a href="#">Facebook</a></li>
-                    <li><a href="#">Blog</a></li>
-                    <li><a href="#">Official</a></li>
-                </ul>
-            </footer>
+            
         </article>
     </a>
     {% endfor %}

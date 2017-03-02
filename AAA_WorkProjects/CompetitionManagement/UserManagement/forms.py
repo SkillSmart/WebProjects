@@ -7,8 +7,7 @@ from .models import ExpertProfile, TeamProfile, StudentProfile
 # Expert Attribute Models
 from .models import MediationExperience, NegotiationExperience
 # Student Attribute Models
-from .models import MediationPractice, NegotiationPractice
-
+from .models import Internship, Course, Award
 
 # Setting up the forms
 class ExpertModelForm(ModelForm):
@@ -40,13 +39,17 @@ class NegotiationExperienceForm(ModelForm):
         fields = ['profession', 'duration', 'cases', 'description', 'priorClients', 'placesWorked']
 
 # Attribute Forms Student Attendents
-
-class MediationPracticeForm(ModelForm):
+class InternshipForm(ModelForm):
     class Meta:
-        model = MediationPractice
+        model = Internship
         exclude = []
 
-class NegotiationPracticeForm(ModelForm):
+class CourseForm(ModelForm):
     class Meta:
-        model = NegotiationPractice
+        model = Course
+        exclude=[]
+
+class AwardForm(ModelForm):
+    class Meta:
+        model = Award
         exclude = []

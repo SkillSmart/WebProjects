@@ -1,0 +1,141 @@
+{% extends 'base_profile.html' %}
+
+
+{% block profile-header %}
+<section class="jumbotron row">
+    
+    <header class="container">
+        <div class="profile_details col-sm-4">
+            <small>{{ student.profile.studentprofile.country }}</small>
+            <img src="{% if student.profile.profileImg %}{{ student.profile.profileImg.url}} {% else %} https://placehold.it/180x180 {% endif %}" alt="">
+            <div class="contact-buttons btn-group btn-group">
+                {% if student.role == 'expert' %}
+                    <button type="button" class="btn btn-success">Connect</button>
+                    <button type="button" class="btn btn-primary">Recommend</button>
+                {% else %}
+                    <button type="button" class="btn btn-success">Ask to Connect</button>
+                    <button type="button" class="btn btn-primary">Schedule Meetup</button>
+                {% endif %}
+            </div>
+            <h2>{{ student.user.get_full_name }}</h2>
+            <p class="affiliation">{{ student.studentRole|title }}</br>
+            {{ student.team }}</p>
+            
+            
+            <nav class="social_links list-inline">
+                <li><a href="{{ student.studentprofile.twitter }}">Twitter</a></li>
+                <li><a href="{{ student.studentprofile.facebook }}">Facebook</a></li>
+                <li><a href="{{ student.studentprofile.blog }}">Blog</a></li>
+            </nav>
+            <ul class="contact_details list-unstyled">
+                <li><span class="glyphicon glyphicon-phone">+43 678 123 5678</span></li>
+                <li><span class="glyphicon glyphicon-envelope"></span>{{ student.email }}</li>
+                <li><span class="glyphicon"></span></li>
+            </ul>
+            
+            
+        </div>
+        <content class="col-sm-8">
+            <div class="backlink">
+            </div>
+            <article class="row">
+                <header>
+                </header>
+                <content>
+                    <h3>Slogan</h3>
+                    <blockquote cite="">
+                        {{ student.profile.studentprofile.slogan }}
+                    </blockquote>
+                </content>
+            </article>
+            <article class="row">
+                <header>
+                    <h3>Biography</h3>
+                </header>
+                <content>
+                    {{ student.profile.studentprofile.bio }}
+                </content>
+            </article>
+        </content>
+    </header>
+</section>
+{% endblock %}
+
+{% block profile-content %}
+<div class="container">
+    <section class="row">
+        <h3>Awards</h3>
+        {% for award in student.profile.studentprofile.awards.all %}
+        <article class="col-sm-4">
+            <h4>{{ award.title }}</h4>
+            <ul class="list-unstyled">
+                <li>{{ award.competition }}</li>
+                <li>{{ award.year}}</li>
+                <li>{{ award.city }}, {{ award.country }}</li>
+            </ul>
+        </article>
+        {% endfor %}
+    </section>
+     <section class="row">
+         {% if student.profile.studentprofile.internships %}<h3>Practical Experience</h3>{% endif %}
+         {% for practice in student.profile.studentprofile.internships.all %}
+         <article class="row">
+             <header class="col-sm-4">
+                 <small>{{ practice.field_of_practice|title }}</small>
+                 <h4>{{ practice.position|title }}</h4>
+                 <ul class="list-unstyled">
+                     <li>{{ practice.duration }}, {{ practice.year }}</li>
+                     <small>Languages Used:</small>
+                     <li>{{ practice.languages_used }}</li>
+                 </ul>
+                 <small></small>
+             </header>
+             <content class="col-sm-8">
+                 <h4>{{ practice.employer }}, {{ practice.country }}</h4>
+                 <p>{{ practice.descr }}</p>
+             </content>
+         </article>
+         {% endfor %}
+     </section>
+     <section class="row">
+         <h3>Course Learnings</h3>
+        {% for course in student.profile.studentprofile.mediation_courses.all %}
+           <article class="row">
+               <header class="col-sm-4">
+                   <small>Mediation Course</small>
+                   <h4>{{ course.title }}</h4>
+                    <ul class="list-unstyled">
+                        <li>{{ course.institution }}, {{ course.year }}</li>
+                        <li>with {{ course.instructor }}</li>
+                        <li>{{ course.duration }} Hours</li>
+                    </ul>
+               </header>
+               <content class="col-sm-8">
+                   <h4>Learnings</h4>
+                    <p>{{ course.learnings }}</p>
+               </content>
+           </article>
+        {% endfor %}
+        {% for course in student.profile.studentprofile.negotiation_courses.all %}
+           <article class="row">
+               <header class="col-sm-4">
+                   <small>Negotiaton Course</small>
+                   <h4>{{ course.title }}</h4>
+                    <ul class="list-unstyled">
+                        <li>{{course.institution }}, {{ course.year }}</li>
+                        <li>with {{ course.instructor }}</li>
+                        <li>{{ course.duration }} Hours</li>
+                    </ul>
+               </header>
+               <content class="col-sm-8">
+                   <h4>Learnings</h4>
+                    <p>{{ course.learnings }}</p>
+               </content>
+           </article>
+        {% endfor %}
+        
+    </section>
+    
+
+</div>
+{% endblock %}

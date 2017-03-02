@@ -1,24 +1,75 @@
 from django.db import models
 from UserManagement.models import Staff
 
+from django.utils.text import slugify
 # --------------Location Management -------------------
-class Venue(models.Model):
-    """A specific location that houses rooms where Sessions take place."""
-    name = models.CharField(max_length=100)
-    address = models.CharField(max_length=100)
-    comments = models.TextField(blank=True, null=True)
-
-    # TODO: Turn the location ino GPS for displaying on a map
-    def __str__(self):
-        return self.name
+from datetime import datetime
 
 class Room(models.Model):
     """A specific Room available to be assigned to a session."""
-    venue = models.ForeignKey(Venue)
     name = models.CharField(max_length=60)
     # Comment section for information as to equipment and specials
-    availabilities = models.TextField(blank=True, null=True)
+    directions = models.TextField(max_length=2000, null=True)
     notes = models.TextField(blank=True, null=True)
+
+class Venue(models.Model):
+    """A specific location that houses rooms where Sessions take place."""
+    name = models.CharField(max_length=100)
+    slug = models.SlugField(blank=True, null=True)
+    street = models.CharField(max_length=100)
+    postalcode = models.CharField(max_length=5)
+    city = models.CharField(default="Vienna", max_length=50)
+    location_info = models.TextField(max_length=1000)
+    rooms = models.ManyToManyField(Room)
+    
+    # Display information
+    img_presentation = models.ImageField(upload_to="venues/presentationImg/")
+    img_venue = models.ImageField(upload_to="venues/locationImg/")
+    
+    # Management related hidden fields
+    _internal_comments = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return self.name 
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
+        
+# -----  STATE MODELS ----------
+class Availability(models.Model):
+    """
+    A continous stretch of available time for a given Room
+    to be used with a Session.
+    """
+    Room = models.ForeignKey(Room)
+    free_from = models.DateTimeField()
+    free_till = models.DateTimeField()
+
+    # Calculate amount of time available in this stretch
+    
+    
+    def schedule(self, session):
+        """
+        Checks if the Time associated with the Session planned fits
+        within the given availability. Returns Boolean answer.
+        """
+        return True
+
+    def duration(self):
+        duration = self.free_from - self.free_till
+        return duration 
+    
+    def get_gps_location(self):
+        pass
+        
+    def __str__(self):
+        return "{}: {}".format(self.free_from, self.duration)
+    # TODO: Turn the location ino GPS for displaying on a map
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)
+        super().save(*args, *kwargs)
 
 # ---------------Session Management-----------------------
 class Session(models.Model):

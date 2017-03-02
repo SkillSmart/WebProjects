@@ -1,0 +1,67 @@
+{% extends 'base_application.html' %}
+
+{% block form-content %}
+<h1>Student Registration</h1>
+<form action="" method="POST">
+    <!--PERSONAL INFORMATION-->
+    <h2>Personal Information</h2>
+    <p>Please control and enhance your personal information 
+        as part of setting up your Student Application with CDRC
+    </p>
+    <table>
+        <tbody>
+            {{ userForm.as_table}}
+        </tbody>
+    </table>
+    <h2>Set up your Profile</h2>
+    <p>Add your information to set a complete presentation of your 
+        relevant professional and educational background</p>
+    <table>
+        <tbody>
+            {{ profileForm.as_table }}
+        </tbody>
+    </table>
+    <!--COMPETITION EXPERIENCE-->
+    <h3>Competition Experience</h3>
+    <p>Please describe all Competitions you took part in.</p>
+    <table>
+        <tbody>
+            {% for form in competitionFormset %}
+            <tr><td>Add Competition Experience</td></tr>
+            {{ form.as_table }}
+            {% endfor %}
+        </tbody>
+    </table>
+    <!--INTERNATIONAL EXPERIENCE-->
+    <h3>International Experience</h3>
+    <p>Please describe all relevant professional Experience you gathered
+        outside of your country of general residency
+    </p>
+    <table>
+        <tbody>
+        {% for form in intExpFormset %}
+            <tr><td>Add another relevant Internship</td></tr>
+            {{ form.as_table }}
+        {% endfor %}
+        </tbody>
+    </table>
+    
+    <!--COURSE EXPERIENCE-->
+    <h3>Relevant Coursework</h3>
+    <p>Please list the relevant courses you have taken during your studies
+        and briefly describe your relevant learnings as they apply to your
+        overall Qualification.
+    </p>
+    <table>
+        <tbody>
+        {% for form in courseworkFormset %}
+            <tr><td>Add another Course</td></tr>
+            {{ form.as_table }}
+        {% endfor %}            
+        </tbody>
+    </table>
+
+    <!--END OF FORM-->
+</form>
+
+{% endblock form-content %}

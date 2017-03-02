@@ -18,11 +18,13 @@
         <header>
             <h2>The Venue </h2>
             {% for venue in venues %}
+            <a href="{% url 'portal:venue_detail' venue.slug %}">
             <article class="venue_teaser">
                 <header>
                     <img src="{% if venue.locationProfileImg %}{{ venue.locationProfileImg.url }}{% else %} https://placehold.it/240x160 {% endif %}" alt="" class="img-responsive">
                 </header>
             </article>
+            </a>
             {% endfor %}
         </header>
     </section>
@@ -32,13 +34,14 @@
         <header>
             <h2>The Teams</h2>
             {% for team in teams_invited %}
+            <a href="{% url 'portal:team_profile' team.slug %}">
             <article class="row team-teaser">
                 <header>
                     <div class="col-sm-3 team-label">
-                        <h3>{{ team.name }}</h3>
+                        <h3>{{ team.university }}</h3>
                         <p>{{ team.slogan }}</p>
                         <ul class="team-members">
-                            {% for member in team.members %}
+                            {% for member in team.members.all %}
                             <li>{{ member.user.get_full_name }}</li>
                             {% endfor %}
                         </ul>
@@ -50,6 +53,7 @@
                     <h4></h4>
                 </header>
             </article>
+            </a>
             {% endfor %}
         </header>
     </section>
@@ -61,6 +65,7 @@
                 <h2>The Experts</h2>
             </header>
             {% for expert in experts_invited %}
+            <a href="{% url 'portal:expert_profile' expert.user.username %}">
                 <article class="col-xs-6  col-sm-4 col-md-3">
                     <header>
                         <img src="{% if expert.expertprofile.profileImg %}{{ expert.expertprofile.profileImg.url }} {% else %}https://placehold.it/190x180 {% endif %}" alt="">
@@ -71,6 +76,7 @@
                         {{ expert.expertprofile.affiliation }}
                     </content>
                 </article>
+                </a>
             {% endfor %}
         </div>
         

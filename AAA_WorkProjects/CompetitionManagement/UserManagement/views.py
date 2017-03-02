@@ -5,29 +5,35 @@ from .models import ExpertProfile, TeamProfile, StudentProfile
 # Form Imports
 from .forms import ExpertModelForm, TeamModelForm, UserModelForm, StudentModelForm
 from .forms import NegotiationExperienceForm, MediationExperienceForm
-from .forms import MediationPracticeForm, NegotiationPracticeForm
+# Student Forms
+from .forms import InternshipForm, CourseForm, AwardForm
 
 # Switch Statements for the different Forms to be used 
-member_forms = {}
-for member in TeamProfile.MEMBERS:
-    member_forms[member]  = StudentModelForm()
+
+# Replace with inline Form Generated Formlist 
+member_forms = [
+    StudentModelForm()
+    ]
 
 PROFILE_FORM = {
     'expert': ExpertModelForm,
     'mediator': member_forms,
     'negotiator': member_forms,
+    'coach': ExpertModelForm,
     'staff': StudentProfile,
     }
 MEDEXP_FORM = {
     'expert': MediationExperienceForm,
-    'mediator': MediationPracticeForm,
-    'negotiator': MediationPracticeForm,
+    'coach': MediationExperienceForm,
+    'mediator': InternshipForm,
+    'negotiator': InternshipForm,
     'staff': None,
 }
 NEGEXP_FORM = {
     'expert': NegotiationExperienceForm,
-    'mediator': NegotiationPracticeForm,
-    'negotiator': NegotiationPracticeForm,
+    'coach': NegotiationExperienceForm,
+    'mediator': InternshipForm,
+    'negotiator': InternshipForm,
     'staff': None,
 }
 # ----- Profile Creation ----------

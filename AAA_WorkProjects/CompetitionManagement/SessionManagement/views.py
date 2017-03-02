@@ -9,3 +9,5 @@ def session_list(request):
         'session_lst': session_list,
     })
 
+
+
